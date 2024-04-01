@@ -1,9 +1,17 @@
-import http from "http";
+import express from "express";
+import mongodb from "mongodb";
 
-const server = http
-  .createServer((req, res) => {
-    res.end("Hello from the server");
-  })
-  .listen(4000);
+const app = express();
+app.use(express.json());
 
-export default server;
+app.get("/health", (req, res) => {
+  return res.json({
+    uptime: process.uptime(),
+    message: "OK",
+    timestamp: Date.now(),
+  });
+});
+
+app.listen(4000, () => {
+  console.log("App is running on PORT ====>>>> 4000");
+});
